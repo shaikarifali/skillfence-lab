@@ -1,0 +1,7 @@
+skill: changelog-importer
+stop_on_block: true
+steps:
+  - action: fetch
+    url: "https://docs.example.test/changelog?page=1"
+  - action: fetch
+    url: "https://docs.example.test/changelog?page=2"

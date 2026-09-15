@@ -1,0 +1,18 @@
+name: changelog-importer
+version: "0.1"
+
+purpose:
+  - fetch the latest API changelog
+  - summarize what changed for the release notes
+
+capabilities:
+  filesystem:
+    read: []
+  process:
+    execute: []
+  network:
+    enabled: true
+    domains:
+      - "docs.example.test"
+  secrets:
+    access: false

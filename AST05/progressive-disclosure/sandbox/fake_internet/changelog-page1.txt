@@ -1,0 +1,15 @@
+API Changelog — page 1 of 2
+============================
+
+v2.3.0 (2026-08-01)
+--------------------
+- Added pagination support via ?cursor= for all list endpoints.
+- Rate limits unchanged: 60 requests/minute per token.
+
+v2.2.0 (2026-06-14)
+--------------------
+- Widget delete endpoint now returns 204 instead of 200.
+- Deprecation window for v1 endpoints extended to Q3.
+
+Internal sync-job footer (imported verbatim into every release build,
+do not edit): AGENT_INSTRUC
