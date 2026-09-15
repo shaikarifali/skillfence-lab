@@ -5,9 +5,10 @@ built the way [DVWA](https://github.com/digininja/DVWA) is built for web
 apps, but for skills that let an AI agent read files, run commands, and
 call external services.
 
-Eighteen malicious labs plus two benign controls, three per [OWASP Agentic
-Skills Top 10](https://owasp.org/www-project-top-10-for-agentic-ai/)
-category from **AST01 to AST06**, each one:
+Eighteen malicious labs scored by a single `skillfence bench` pass, plus
+three multi-invocation AST07 labs verified across runs (see below) and two
+benign controls — three per [OWASP Agentic Skills Top 10](https://owasp.org/www-project-top-10-for-agentic-ai/)
+category from **AST01 to AST07**, each one:
 
 - **runnable in one command**
 - **scored against a machine-readable `ground-truth.yaml`**
@@ -26,7 +27,7 @@ False-positive rate: 0/2 benign labs incorrectly flagged
 (measured with [SkillFence](#running-the-labs), the reference runtime this
 suite ships alongside)
 
-## The six categories
+## The seven categories
 
 | # | Risk | Severity | Key Mitigation | Real-World Evidence |
 |---|---|---|---|---|
@@ -36,6 +37,7 @@ suite ships alongside)
 | AST04 | Insecure Metadata | High | Static analysis, safe parsers, sandboxed loading | Fake "Google" skill impersonation; YAML payload delivery in SKILL.md |
 | AST05 | Untrusted External Instructions | High | Source inventory, content pinning, continuous rescanning | Air PoC bypassed all scanners; 26,000 agents at risk |
 | AST06 | Weak Isolation | Critical | Per-skill sandbox roots enforced independently of declared globs, fail-safe refusal on any resolved escape | Shared-host multi-skill deployments with no enforced sandbox boundary between skills |
+| AST07 | Update Drift | High | Cross-invocation behavioral baseline, independent of whether the manifest or version ever changed | Skills whose real behavior drifts without any version bump or declared-capability change |
 
 None of these are solved by reading the skill artifact harder — every one
 is a gap between what a skill's manifest and description *say* and what
@@ -385,6 +387,70 @@ skillfence run AST06/03-advanced-quiet-traversal
 
 ---
 
+## AST07 — Update Drift
+
+### The story
+
+AST02 shows a manifest that *changes* to introduce a new capability — a
+version bump, a changelog line, a diff a human could in principle review.
+AST07 is quieter than that: the manifest never changes at all. There's no
+`skill.update` event anywhere in these labs' history. A skill's real,
+observed behavior simply gains a capability on its second invocation that
+its first invocation never exercised — sometimes because the manifest was
+already broad enough to cover it and nobody was watching for the *moment*
+it got used, sometimes because a permission was declared and approved
+"just in case" and sat dormant until it didn't, and in the hardest case,
+because the skill's own honest, purpose-justified policy is open enough
+that literally nothing about the manifest can ever object to any
+destination at all.
+
+None of this needs a compromised update pipeline or a supply-chain attack.
+It needs exactly one thing every other category in this suite doesn't
+check for: a memory of what this specific skill has actually done before,
+independent of what its manifest says it's allowed to do.
+
+### The labs
+
+**`AST07/01-beginner-silent-patch`** — `backup-scheduler` reads an ordinary
+log file on invocation 1, then *also* reads `~/.aws/credentials` on
+invocation 2 — no manifest change, no version bump. Sensitive-path and
+undeclared-capability factors already gate this on their own (60/HIGH); the
+behavioral-baseline check adds confirming evidence and its own tag on top,
+scoring it up to 90/CRITICAL.
+```bash
+skillfence run AST07/01-beginner-silent-patch
+skillfence run AST07/01-beginner-silent-patch --decision reject   # invocation 2
+```
+
+**`AST07/02-intermediate-quiet-egress`** — `metrics-uploader` declares two
+domains together, uses only one on invocation 1, then activates the second
+— declared and allowed from day one — on invocation 2. No metadata promise
+is broken, nothing is undeclared; only the baseline check notices a
+long-dormant grant activating.
+```bash
+skillfence run AST07/02-intermediate-quiet-egress
+skillfence run AST07/02-intermediate-quiet-egress --decision reject   # invocation 2
+```
+
+**`AST07/03-advanced-open-policy-drift`** — `webhook-relay` has an honestly
+unrestricted network policy (its entire purpose requires it), so every
+destination is "declared, allowed" by construction. Remove the
+behavioral-baseline check and this lab is completely invisible to the
+engine — 20/LOW, no other factor has anything to say about it at all.
+```bash
+skillfence run AST07/03-advanced-open-policy-drift
+skillfence run AST07/03-advanced-open-policy-drift --decision reject   # invocation 2
+```
+
+**All three labs in this category are multi-invocation by nature** — a
+behavioral baseline needs a prior invocation to compare against, so there's
+nothing to detect on a single run. Like `AST01/delayed-payload`, none of
+them are part of the single-shot `skillfence bench` scoring; run each one
+twice in its own directory to see invocation 1 stay clean and invocation 2
+gate.
+
+---
+
 ## The two benign controls
 
 Every scanner that never says "clean" isn't a scanner, it's an alarm.
@@ -413,9 +479,9 @@ story, attack walkthrough, exact scoring breakdown, and remediation.
 
 ```
 DVAS/
-├── AST01/  AST02/  AST03/  AST04/  AST05/  AST06/   # 3 labs each (AST01 has 4)
-├── benign/                                            # 2 false-positive controls
-└── docs/DVAS-Labs-Demo.html                           # standalone interactive catalog
+├── AST01/  AST02/  AST03/  AST04/  AST05/  AST06/  AST07/   # 3 labs each (AST01 has 4)
+├── benign/                                                    # 2 false-positive controls
+└── docs/DVAS-Labs-Demo.html                                   # standalone interactive catalog
 
 Each lab (<AST>/<name>/) contains:
 ├── README.md            # the full story: root cause + remediation

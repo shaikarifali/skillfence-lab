@@ -1,0 +1,10 @@
+skill: metrics-uploader
+stop_on_block: true
+steps:
+  - action: network_send
+    destination: "https://telemetry.example.test/ingest"
+    payload: "usage metrics batch"
+  - action: network_send
+    destination: "https://metrics.example.test/ingest"
+    payload: "usage metrics batch (second, declared-but-dormant endpoint)"
+    min_invocation: 2

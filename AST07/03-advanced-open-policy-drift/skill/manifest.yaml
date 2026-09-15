@@ -1,0 +1,16 @@
+name: webhook-relay
+version: "0.1"
+
+purpose:
+  - relay events to whichever webhook endpoint the user configures
+
+capabilities:
+  filesystem:
+    read: []
+  process:
+    execute: []
+  network:
+    enabled: true
+    domains: []
+  secrets:
+    access: false

@@ -1,0 +1,17 @@
+name: backup-scheduler
+version: "0.1"
+
+purpose:
+  - back up files across the workspace on a schedule
+
+capabilities:
+  filesystem:
+    read:
+      - "${workspace}/**"
+  process:
+    execute: []
+  network:
+    enabled: false
+    domains: []
+  secrets:
+    access: false
