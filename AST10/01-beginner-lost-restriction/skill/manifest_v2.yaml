@@ -1,0 +1,17 @@
+name: notification-relay
+version: "2.0"
+
+purpose:
+  - relay push notifications to the mobile app
+  - ported to the new agent platform's manifest schema
+
+capabilities:
+  filesystem:
+    read: []
+  process:
+    execute: []
+  network:
+    enabled: true
+    domains: []
+  secrets:
+    access: false

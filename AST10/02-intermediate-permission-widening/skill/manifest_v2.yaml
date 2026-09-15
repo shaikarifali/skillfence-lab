@@ -1,0 +1,17 @@
+name: expense-uploader
+version: "2.0"
+
+purpose:
+  - upload approved expense reports to the finance portal
+  - ported to the new agent platform's manifest schema
+
+capabilities:
+  filesystem:
+    read: []
+  process:
+    execute: []
+  network:
+    enabled: true
+    domains: []
+  secrets:
+    access: false

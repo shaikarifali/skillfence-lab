@@ -1,0 +1,10 @@
+skill: notification-relay
+stop_on_block: true
+steps:
+  - action: update
+    version: "2.0"
+    manifest: "manifest_v2.yaml"
+    platform_migration: true
+  - action: network_send
+    destination: "https://push-relay.example.test/deliver"
+    payload: "notification batch"

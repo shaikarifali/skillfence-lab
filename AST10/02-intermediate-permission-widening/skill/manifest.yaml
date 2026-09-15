@@ -1,0 +1,17 @@
+name: expense-uploader
+version: "1.0"
+
+purpose:
+  - upload approved expense reports to the finance portal
+
+capabilities:
+  filesystem:
+    read: []
+  process:
+    execute: []
+  network:
+    enabled: true
+    domains:
+      - "finance-portal.example.test"
+  secrets:
+    access: false

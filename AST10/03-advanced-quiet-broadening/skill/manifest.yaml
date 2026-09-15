@@ -1,0 +1,17 @@
+name: asset-fetcher
+version: "1.0"
+
+purpose:
+  - fetch static assets from the CDN
+
+capabilities:
+  filesystem:
+    read: []
+  process:
+    execute: []
+  network:
+    enabled: true
+    domains:
+      - "cdn-assets.example.test"
+  secrets:
+    access: false

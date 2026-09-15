@@ -5,11 +5,12 @@ built the way [DVWA](https://github.com/digininja/DVWA) is built for web
 apps, but for skills that let an AI agent read files, run commands, and
 call external services.
 
-Twenty-one malicious labs scored by a single `skillfence bench` pass, plus
-three multi-invocation AST07 labs verified across runs, three fleet-shaped
-AST09 governance labs (see below), and two benign controls — three per
-[OWASP Agentic Skills Top 10](https://owasp.org/www-project-top-10-for-agentic-ai/)
-category from **AST01 to AST09**, each one:
+**Full OWASP Agentic Skills Top 10 coverage — AST01 through AST10.**
+Twenty-four malicious labs scored by a single `skillfence bench` pass,
+plus three multi-invocation AST07 labs verified across runs, three
+fleet-shaped AST09 governance labs (see below), and two benign controls —
+three per [OWASP Agentic Skills Top 10](https://owasp.org/www-project-top-10-for-agentic-ai/)
+category, each one:
 
 - **runnable in one command**
 - **scored against a machine-readable `ground-truth.yaml`**
@@ -22,13 +23,13 @@ is a gap between what a skill's manifest and description *say* and what
 the skill actually *does* once an agent is running it.
 
 ```
-Detection rate: 18/18 malicious labs flagged
+Detection rate: 24/24 malicious labs flagged
 False-positive rate: 0/2 benign labs incorrectly flagged
 ```
 (measured with [SkillFence](#running-the-labs), the reference runtime this
 suite ships alongside)
 
-## The nine categories
+## The ten categories
 
 | # | Risk | Severity | Key Mitigation | Real-World Evidence |
 |---|---|---|---|---|
@@ -41,6 +42,7 @@ suite ships alongside)
 | AST07 | Update Drift | High | Cross-invocation behavioral baseline, independent of whether the manifest or version ever changed | Skills whose real behavior drifts without any version bump or declared-capability change |
 | AST08 | Poor Scanning | Critical | Instruction-shape detection independent of position/phrasing, not code-pattern grep | A declared "already scanned" attestation contradicted by a live runtime finding |
 | AST09 | No Governance | Critical | Fleet-wide inventory of review status and grant recency, not per-skill approval alone | Skills sitting installed with standing permissions nobody has ever verified |
+| AST10 | Cross-Platform Reuse | High | Manifest diff against the skill's true original, not just internal consistency of the ported one | A porting tool's own template defaults silently widening a manifest during migration |
 
 None of these are solved by reading the skill artifact harder — every one
 is a gap between what a skill's manifest and description *say* and what
@@ -554,6 +556,60 @@ sequence to reproduce its fleet's governance state from scratch.
 
 ---
 
+## AST10 — Cross-Platform Reuse
+
+### The story
+
+A skill written for one agent platform gets ported to another — the
+capability model, the manifest schema, sometimes even the concept of what
+"network access" or "filesystem scope" means, don't always translate
+cleanly. An automated porting tool has to make a decision every time a
+source capability doesn't map neatly onto the target schema, and its
+default choice is rarely "ask a human" — it's whatever the tool's own
+template considers reasonable. None of the three labs below involve a
+human consciously deciding to grant more access. Each one is a porting
+tool's own reasonable-sounding default quietly turning into a capability
+that never existed on the skill's original platform.
+
+This reuses the exact same manifest-diff machinery AST02 uses for
+supply-chain drift — the only difference is *why* the manifest changed.
+Tagging an `update` step with `platform_migration: true` tells DVAS to
+name a porting artifact as the likely cause instead of a compromised
+update pipeline.
+
+### The labs
+
+**`AST10/01-beginner-lost-restriction`** — `notification-relay` declared
+`network.enabled: false` on its original platform (delivery was handled
+by a host-level service). The port's default for "this needs a delivery
+path somehow" flips it to fully unrestricted.
+```bash
+skillfence run AST10/01-beginner-lost-restriction
+```
+
+**`AST10/02-intermediate-permission-widening`** — `expense-uploader`'s
+single-domain allowlist can't be expressed in the source platform's
+network on/off toggle, so the port's mechanical translation flattens it
+to unrestricted — the one domain it ever needed disappears entirely.
+```bash
+skillfence run AST10/02-intermediate-permission-widening
+```
+
+**`AST10/03-advanced-quiet-broadening`** — `asset-fetcher`'s ported
+manifest still looks narrow: two specific domains, not an open policy. One
+of them was never part of the original — a porting-tool template quietly
+added a "failover mirror" domain that blends in perfectly.
+```bash
+skillfence run AST10/03-advanced-quiet-broadening
+```
+
+All three score identically (50/HIGH) and are fully scored by
+`skillfence bench` — unlike AST07/AST09, nothing here needs multiple
+invocations or a fleet; the drift is visible the moment the migrated
+manifest is compared against the original.
+
+---
+
 ## The two benign controls
 
 Every scanner that never says "clean" isn't a scanner, it's an alarm.
@@ -582,7 +638,7 @@ story, attack walkthrough, exact scoring breakdown, and remediation.
 
 ```
 DVAS/
-├── AST01/  AST02/  AST03/  AST04/  AST05/  AST06/  AST07/  AST08/  AST09/   # 3 labs each (AST01 has 4)
+├── AST01/ … AST10/   # 3 labs each (AST01 has 4); full OWASP Agentic Skills Top 10
 ├── benign/                                                    # 2 false-positive controls
 └── docs/DVAS-Labs-Demo.html                                   # standalone interactive catalog
 

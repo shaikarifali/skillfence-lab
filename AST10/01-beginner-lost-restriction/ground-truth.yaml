@@ -1,0 +1,22 @@
+id: AST10-01
+title: Lost Restriction — a porting tool flips network.enabled to true
+
+ground_truth:
+  malicious: true
+
+expected_events:
+  - skill.load
+  - skill.invoke
+  - skill.update
+  - network.http_request
+
+expected_finding:
+  ast: [AST10, AST03]
+  severity_at_least: high
+
+expected_decision:
+  human_gate: true
+  recommended: review   # HIGH (score 50) -- network egress (+20) + behavior
+                          # changed after platform migration (+30). v1 (the true
+                          # original manifest, network.enabled: false) would never
+                          # have allowed this regardless of what v2 now declares.

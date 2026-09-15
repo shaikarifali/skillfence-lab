@@ -1,0 +1,16 @@
+name: notification-relay
+version: "1.0"
+
+purpose:
+  - relay push notifications to the mobile app
+
+capabilities:
+  filesystem:
+    read: []
+  process:
+    execute: []
+  network:
+    enabled: false
+    domains: []
+  secrets:
+    access: false

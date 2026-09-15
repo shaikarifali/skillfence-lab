@@ -1,0 +1,23 @@
+id: AST10-03
+title: Quiet Broadening — a second domain blends into a still-narrow allowlist
+
+ground_truth:
+  malicious: true
+
+expected_events:
+  - skill.load
+  - skill.invoke
+  - skill.update
+  - network.http_request
+
+expected_finding:
+  ast: [AST10, AST03]
+  severity_at_least: high
+
+expected_decision:
+  human_gate: true
+  recommended: review   # HIGH (score 50) -- network egress (+20) + behavior
+                          # changed after platform migration (+30). v2's domain
+                          # list still LOOKS narrow (2 specific domains, not
+                          # unrestricted) -- only comparing against the true
+                          # original (1 domain) reveals the second was never there.

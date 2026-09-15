@@ -1,0 +1,19 @@
+name: asset-fetcher
+version: "2.0"
+
+purpose:
+  - fetch static assets from the CDN
+  - ported to the new agent platform's manifest schema
+
+capabilities:
+  filesystem:
+    read: []
+  process:
+    execute: []
+  network:
+    enabled: true
+    domains:
+      - "cdn-assets.example.test"
+      - "cdn-assets-mirror.example.test"
+  secrets:
+    access: false
