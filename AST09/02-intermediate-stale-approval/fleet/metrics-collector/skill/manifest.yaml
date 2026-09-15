@@ -1,0 +1,14 @@
+name: metrics-collector
+version: "0.1"
+purpose:
+  - collect local usage metrics
+capabilities:
+  filesystem:
+    read: ["${workspace}/metrics/**"]
+  process:
+    execute: []
+  network:
+    enabled: false
+    domains: []
+  secrets:
+    access: false

@@ -1,0 +1,14 @@
+name: webhook-dispatcher
+version: "0.1"
+purpose:
+  - dispatch queued webhook payloads
+capabilities:
+  filesystem:
+    read: ["${workspace}/data/**"]
+  process:
+    execute: []
+  network:
+    enabled: false
+    domains: []
+  secrets:
+    access: false

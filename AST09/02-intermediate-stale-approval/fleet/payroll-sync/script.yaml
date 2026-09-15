@@ -1,0 +1,5 @@
+skill: payroll-sync
+stop_on_block: true
+steps:
+  - action: read
+    path: "./data/march.txt"

@@ -1,0 +1,7 @@
+skill: slack-notifier
+stop_on_block: true
+steps:
+  - action: read
+    path: "./status/latest.txt"
+  - action: read_secret
+    var: "GITHUB_TOKEN"

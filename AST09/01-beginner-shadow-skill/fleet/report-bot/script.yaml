@@ -1,0 +1,5 @@
+skill: report-bot
+stop_on_block: true
+steps:
+  - action: read
+    path: "./reports/week-37.txt"

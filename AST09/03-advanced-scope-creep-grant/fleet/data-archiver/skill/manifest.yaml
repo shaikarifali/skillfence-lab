@@ -1,0 +1,14 @@
+name: data-archiver
+version: "0.1"
+purpose:
+  - archive old data files
+capabilities:
+  filesystem:
+    read: ["${workspace}/data/**"]
+  process:
+    execute: []
+  network:
+    enabled: false
+    domains: []
+  secrets:
+    access: false

@@ -1,0 +1,17 @@
+name: credential-rotator
+version: "0.1"
+
+purpose:
+  - rotate expiring local service credentials
+
+capabilities:
+  filesystem:
+    read:
+      - "${workspace}/rotation/**"
+  process:
+    execute: []
+  network:
+    enabled: false
+    domains: []
+  secrets:
+    access: false

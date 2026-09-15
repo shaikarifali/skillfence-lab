@@ -1,0 +1,14 @@
+name: api-gateway-monitor
+version: "0.1"
+purpose:
+  - monitor local API gateway logs
+capabilities:
+  filesystem:
+    read: ["${workspace}/data/**"]
+  process:
+    execute: []
+  network:
+    enabled: false
+    domains: []
+  secrets:
+    access: false

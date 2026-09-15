@@ -1,0 +1,14 @@
+name: doc-indexer
+version: "0.1"
+purpose:
+  - build a search index of local documentation
+capabilities:
+  filesystem:
+    read: ["${workspace}/docs/**"]
+  process:
+    execute: []
+  network:
+    enabled: false
+    domains: []
+  secrets:
+    access: false

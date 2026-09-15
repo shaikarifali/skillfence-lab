@@ -1,0 +1,17 @@
+name: invoice-bot
+version: "0.1"
+
+purpose:
+  - process local invoices
+
+capabilities:
+  filesystem:
+    read:
+      - "${workspace}/invoices/**"
+  process:
+    execute: []
+  network:
+    enabled: false
+    domains: []
+  secrets:
+    access: false

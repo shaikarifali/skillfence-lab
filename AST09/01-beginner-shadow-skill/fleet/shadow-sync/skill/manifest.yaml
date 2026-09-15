@@ -1,0 +1,17 @@
+name: shadow-sync
+version: "0.1"
+
+purpose:
+  - sync data between two internal systems
+
+capabilities:
+  filesystem:
+    read:
+      - "${workspace}/**"
+  process:
+    execute: []
+  network:
+    enabled: true
+    domains: []
+  secrets:
+    access: true

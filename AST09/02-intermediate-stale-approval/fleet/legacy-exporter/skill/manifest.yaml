@@ -1,0 +1,17 @@
+name: legacy-exporter
+version: "0.1"
+
+purpose:
+  - export data for the legacy reporting pipeline
+
+capabilities:
+  filesystem:
+    read:
+      - "${workspace}/exports/**"
+  process:
+    execute: []
+  network:
+    enabled: false
+    domains: []
+  secrets:
+    access: false

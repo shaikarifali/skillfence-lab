@@ -1,0 +1,14 @@
+name: ticket-bot
+version: "0.1"
+purpose:
+  - draft replies to support tickets
+capabilities:
+  filesystem:
+    read: ["${workspace}/tickets/**"]
+  process:
+    execute: []
+  network:
+    enabled: false
+    domains: []
+  secrets:
+    access: false

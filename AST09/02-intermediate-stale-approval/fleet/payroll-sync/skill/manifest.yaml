@@ -1,0 +1,14 @@
+name: payroll-sync
+version: "0.1"
+purpose:
+  - sync local payroll records
+capabilities:
+  filesystem:
+    read: ["${workspace}/data/**"]
+  process:
+    execute: []
+  network:
+    enabled: false
+    domains: []
+  secrets:
+    access: false

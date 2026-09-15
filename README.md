@@ -6,9 +6,10 @@ apps, but for skills that let an AI agent read files, run commands, and
 call external services.
 
 Twenty-one malicious labs scored by a single `skillfence bench` pass, plus
-three multi-invocation AST07 labs verified across runs (see below) and two
-benign controls — three per [OWASP Agentic Skills Top 10](https://owasp.org/www-project-top-10-for-agentic-ai/)
-category from **AST01 to AST08**, each one:
+three multi-invocation AST07 labs verified across runs, three fleet-shaped
+AST09 governance labs (see below), and two benign controls — three per
+[OWASP Agentic Skills Top 10](https://owasp.org/www-project-top-10-for-agentic-ai/)
+category from **AST01 to AST09**, each one:
 
 - **runnable in one command**
 - **scored against a machine-readable `ground-truth.yaml`**
@@ -27,7 +28,7 @@ False-positive rate: 0/2 benign labs incorrectly flagged
 (measured with [SkillFence](#running-the-labs), the reference runtime this
 suite ships alongside)
 
-## The eight categories
+## The nine categories
 
 | # | Risk | Severity | Key Mitigation | Real-World Evidence |
 |---|---|---|---|---|
@@ -39,6 +40,7 @@ suite ships alongside)
 | AST06 | Weak Isolation | Critical | Per-skill sandbox roots enforced independently of declared globs, fail-safe refusal on any resolved escape | Shared-host multi-skill deployments with no enforced sandbox boundary between skills |
 | AST07 | Update Drift | High | Cross-invocation behavioral baseline, independent of whether the manifest or version ever changed | Skills whose real behavior drifts without any version bump or declared-capability change |
 | AST08 | Poor Scanning | Critical | Instruction-shape detection independent of position/phrasing, not code-pattern grep | A declared "already scanned" attestation contradicted by a live runtime finding |
+| AST09 | No Governance | Critical | Fleet-wide inventory of review status and grant recency, not per-skill approval alone | Skills sitting installed with standing permissions nobody has ever verified |
 
 None of these are solved by reading the skill artifact harder — every one
 is a gap between what a skill's manifest and description *say* and what
@@ -504,6 +506,54 @@ scanner's specific, realistic tuning choice would have missed it.
 
 ---
 
+## AST09 — No Governance
+
+### The story
+
+Every other category in this suite is about one skill's runtime behavior.
+This one is about a *fleet*: an org that installs many skills has no
+answer to "which of these were ever actually reviewed, and which still
+have a standing elevated grant nobody's looked at since?" unless something
+tracks it. A skill sitting installed with broad, unreviewed permissions is
+a standing risk, not a live attack. A scoped approval that never gets
+re-validated is exactly what a human-in-the-loop system can otherwise hide
+behind — the whole point of Decision Memory is to not re-ask for the same
+thing forever, but that only stays safe if someone can see which standing
+grants exist and when they were last actually vouched for. These labs are
+fleet directories, not single-skill scripts — there is nothing for
+`skillfence bench` to score here; each is a guided exercise using
+`skillfence inventory`.
+
+### The labs
+
+**`AST09/01-beginner-shadow-skill`** — a fleet of 3. Two skills reviewed
+and run, one — `shadow-sync`, declaring the broadest permissions of the
+three — never touched at all.
+```bash
+skillfence inventory AST09/01-beginner-shadow-skill/fleet --all
+```
+
+**`AST09/02-intermediate-stale-approval`** — a fleet of 5. Four ordinary
+skills, one (`legacy-exporter`) with a CRITICAL finding approved via a
+scoped, never-expiring grant and never reviewed again since.
+```bash
+skillfence inventory AST09/02-intermediate-stale-approval/fleet --all
+```
+
+**`AST09/03-advanced-scope-creep-grant`** — a fleet of 6, with a genuine
+decoy: two skills both carry an active scoped grant for a HIGH finding,
+identical at a glance. `slack-notifier` was reviewed again after its
+grant; `credential-rotator` never was. Only recency of review relative to
+the grant tells them apart.
+```bash
+skillfence inventory AST09/03-advanced-scope-creep-grant/fleet --all
+```
+
+Every lab's own `README.md` has the exact `skillfence run`/`policy allow`
+sequence to reproduce its fleet's governance state from scratch.
+
+---
+
 ## The two benign controls
 
 Every scanner that never says "clean" isn't a scanner, it's an alarm.
@@ -532,7 +582,7 @@ story, attack walkthrough, exact scoring breakdown, and remediation.
 
 ```
 DVAS/
-├── AST01/  AST02/  AST03/  AST04/  AST05/  AST06/  AST07/  AST08/   # 3 labs each (AST01 has 4)
+├── AST01/  AST02/  AST03/  AST04/  AST05/  AST06/  AST07/  AST08/  AST09/   # 3 labs each (AST01 has 4)
 ├── benign/                                                    # 2 false-positive controls
 └── docs/DVAS-Labs-Demo.html                                   # standalone interactive catalog
 

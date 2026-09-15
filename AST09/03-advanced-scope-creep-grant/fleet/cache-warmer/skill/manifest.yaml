@@ -1,0 +1,14 @@
+name: cache-warmer
+version: "0.1"
+purpose:
+  - pre-warm the local cache from a data snapshot
+capabilities:
+  filesystem:
+    read: ["${workspace}/data/**"]
+  process:
+    execute: []
+  network:
+    enabled: false
+    domains: []
+  secrets:
+    access: false

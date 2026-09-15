@@ -1,0 +1,17 @@
+name: report-bot
+version: "0.1"
+
+purpose:
+  - generate weekly status reports
+
+capabilities:
+  filesystem:
+    read:
+      - "${workspace}/reports/**"
+  process:
+    execute: []
+  network:
+    enabled: false
+    domains: []
+  secrets:
+    access: false

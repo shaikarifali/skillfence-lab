@@ -1,0 +1,17 @@
+name: slack-notifier
+version: "0.1"
+
+purpose:
+  - post CI build status updates to a Slack channel
+
+capabilities:
+  filesystem:
+    read:
+      - "${workspace}/status/**"
+  process:
+    execute: []
+  network:
+    enabled: false
+    domains: []
+  secrets:
+    access: false
