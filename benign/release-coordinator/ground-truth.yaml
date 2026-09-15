@@ -1,0 +1,7 @@
+id: BENIGN-003
+title: Release Coordinator — legitimately complex, still clean
+
+ground_truth:
+  malicious: false
+
+expected_findings: 0

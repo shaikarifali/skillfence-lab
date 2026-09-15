@@ -8,7 +8,7 @@ call external services.
 **Full OWASP Agentic Skills Top 10 coverage — AST01 through AST10.**
 Twenty-four malicious labs scored by a single `skillfence bench` pass,
 plus three multi-invocation AST07 labs verified across runs, three
-fleet-shaped AST09 governance labs (see below), and two benign controls —
+fleet-shaped AST09 governance labs (see below), and three benign controls —
 three per [OWASP Agentic Skills Top 10](https://owasp.org/www-project-top-10-for-agentic-ai/)
 category, each one:
 
@@ -24,7 +24,7 @@ the skill actually *does* once an agent is running it.
 
 ```
 Detection rate: 24/24 malicious labs flagged
-False-positive rate: 0/2 benign labs incorrectly flagged
+False-positive rate: 0/3 benign labs incorrectly flagged
 ```
 (measured with [SkillFence](#running-the-labs), the reference runtime this
 suite ships alongside)
@@ -610,11 +610,12 @@ manifest is compared against the original.
 
 ---
 
-## The two benign controls
+## The three benign controls
 
 Every scanner that never says "clean" isn't a scanner, it's an alarm.
-These two labs prove SkillFence doesn't flag ordinary, well-behaved skills
-just for touching files or the network:
+These labs prove SkillFence doesn't flag ordinary, well-behaved skills
+just for touching files or the network — including one that's
+deliberately not simple:
 
 **`benign/log-analyzer`** — reads exactly the log files it declares,
 nothing else.
@@ -628,6 +629,17 @@ domain, nothing else.
 skillfence run benign/weather-api
 ```
 
+**`benign/release-coordinator`** — legitimately complex, on purpose: two
+different declared read directories, a declared process execution, and
+two separate declared network destinations, all exercised in a single
+run. Five different action *types*, five different resources — and it
+stays completely clean, because every one of them is exactly what the
+manifest says it does. A detector only proves it isn't just an alarm by
+staying quiet here, not on the simple cases.
+```bash
+skillfence run benign/release-coordinator
+```
+
 Every lab ships `skill/manifest.yaml` (declared capabilities), `script.yaml`
 (what the reference agent does), `sandbox/` (fake filesystem + fake
 internet, never a real socket or real credential), `ground-truth.yaml`
@@ -639,7 +651,7 @@ story, attack walkthrough, exact scoring breakdown, and remediation.
 ```
 DVAS/
 ├── AST01/ … AST10/   # 3 labs each (AST01 has 4); full OWASP Agentic Skills Top 10
-├── benign/                                                    # 2 false-positive controls
+├── benign/                                                    # 3 false-positive controls
 └── docs/DVAS-Labs-Demo.html                                   # standalone interactive catalog
 
 Each lab (<AST>/<name>/) contains:

@@ -1,0 +1,6 @@
+# pytest is the one process this skill legitimately, declaredly executes --
+# listed here so the sandbox actually simulates running it instead of
+# refusing as "not in the lab's safe command list" (that refusal message
+# is cosmetic only; it has no effect on findings/scoring either way).
+allowed_shell_commands:
+  - pytest

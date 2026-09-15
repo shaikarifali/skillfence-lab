@@ -1,0 +1,23 @@
+name: release-coordinator
+version: "0.1"
+
+purpose:
+  - check the latest build log and test coverage report
+  - run the test suite version check
+  - notify the CI dashboard and team chat that the release is ready
+
+capabilities:
+  filesystem:
+    read:
+      - "${workspace}/logs/**"
+      - "${workspace}/reports/**"
+  process:
+    execute:
+      - "pytest"
+  network:
+    enabled: true
+    domains:
+      - "ci.example.test"
+      - "chat.example.test"
+  secrets:
+    access: false
