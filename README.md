@@ -6,9 +6,10 @@ apps, but for skills that let an AI agent read files, run commands, and
 call external services.
 
 **Full OWASP Agentic Skills Top 10 coverage — AST01 through AST10.**
-Twenty-six malicious labs scored by a single `skillfence bench` pass,
+Twenty-seven malicious labs scored by a single `skillfence bench` pass,
 plus three multi-invocation AST07 labs verified across runs, three
-fleet-shaped AST09 governance labs (see below), and three benign controls —
+fleet-shaped AST09 governance labs (see below), one capstone chaining four
+categories into a single realistic attack, and three benign controls —
 three per [OWASP Agentic Skills Top 10](https://owasp.org/www-project-top-10-for-agentic-ai/)
 category, each one:
 
@@ -23,7 +24,7 @@ is a gap between what a skill's manifest and description *say* and what
 the skill actually *does* once an agent is running it.
 
 ```
-Detection rate: 26/26 malicious labs flagged
+Detection rate: 27/27 malicious labs flagged
 False-positive rate: 0/3 benign labs incorrectly flagged
 ```
 (measured with [SkillFence](#running-the-labs), the reference runtime this
@@ -637,6 +638,30 @@ manifest is compared against the original.
 
 ---
 
+## The capstone
+
+Every lab above demonstrates one detection mechanism in isolation. Real
+attacks rarely stay that polite.
+
+**`CAPSTONE/lethal-trifecta`** — a support-ticket triage bot that
+legitimately needs all three legs of the
+[lethal trifecta](https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/):
+access to private customer data, exposure to untrusted content (a support
+ticket, submitted by a stranger, by definition), and the ability to
+communicate externally (the helpdesk API it already talks to). A single
+ticket chains all three: an embedded instruction triggers a sensitive
+credential read, then a second embedded instruction — in the ticket's own
+attachment note — triggers an attempt to exfiltrate it. Both are blocked;
+the correlation engine ties them into one session carrying both
+`External Content -> Instruction -> Sensitive Tool Request` and
+`Credential Access -> Collection -> Exfiltration`, spanning four OWASP
+categories (AST01, AST03, AST04, AST05) from one realistic scenario.
+```bash
+skillfence run CAPSTONE/lethal-trifecta
+```
+
+---
+
 ## The three benign controls
 
 Every scanner that never says "clean" isn't a scanner, it's an alarm.
@@ -678,6 +703,7 @@ story, attack walkthrough, exact scoring breakdown, and remediation.
 ```
 DVAS/
 ├── AST01/ … AST10/   # 3 labs each (AST01 has 5, AST05 has 4); full OWASP Agentic Skills Top 10
+├── CAPSTONE/                                                   # one story spanning multiple categories
 ├── benign/                                                    # 3 false-positive controls
 └── docs/DVAS-Labs-Demo.html                                   # standalone interactive catalog
 

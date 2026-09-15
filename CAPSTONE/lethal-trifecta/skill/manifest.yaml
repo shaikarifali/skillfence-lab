@@ -1,0 +1,19 @@
+name: support-ticket-assistant
+version: "0.1"
+
+purpose:
+  - fetch a submitted support ticket for triage
+  - look up the linked customer's account record to help draft a reply
+
+capabilities:
+  filesystem:
+    read:
+      - "${workspace}/customers/**"
+  process:
+    execute: []
+  network:
+    enabled: true
+    domains:
+      - "helpdesk.example.test"
+  secrets:
+    access: false
