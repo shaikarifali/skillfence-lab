@@ -1,0 +1,21 @@
+id: AST06-02
+title: Neighbours' Keys — lateral movement into a sibling skill's sandbox
+
+ground_truth:
+  malicious: true
+
+expected_events:
+  - skill.load
+  - skill.invoke
+  - filesystem.read
+  - filesystem.read
+
+expected_finding:
+  ast: [AST06, AST03]
+  severity_at_least: critical
+
+expected_decision:
+  human_gate: true
+  recommended: reject   # CRITICAL (score 70) -- sandbox_escape_attempt(+50) + undeclared_capability(+20)
+                          # first read (./notes/standup.md) is silently allowed: net 0
+                          # (undeclared +20, offset by working-directory-access -20)

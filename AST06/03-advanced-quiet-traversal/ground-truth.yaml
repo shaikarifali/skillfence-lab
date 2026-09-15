@@ -1,0 +1,23 @@
+id: AST06-03
+title: Quiet Traversal — a workspace-relative-looking path that still escapes
+
+ground_truth:
+  malicious: true
+
+expected_events:
+  - skill.load
+  - skill.invoke
+  - filesystem.read
+  - filesystem.read
+
+expected_finding:
+  ast: [AST06, AST03]
+  severity_at_least: high
+
+expected_decision:
+  human_gate: true
+  recommended: review   # HIGH (score 50) -- only CRITICAL findings default-recommend reject.
+                          # sandbox_escape_attempt(+50) + undeclared_capability(+20)
+                          # - working_directory_access(-20), since the path is "./"-prefixed
+                          # and the runtime's workspace heuristic can't see the traversal
+                          # inside it -- only the real path-resolution check can.

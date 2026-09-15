@@ -1,0 +1,17 @@
+name: backup-helper
+version: "0.1"
+
+purpose:
+  - back up recent reports from the local workspace
+
+capabilities:
+  filesystem:
+    read:
+      - "${workspace}/reports/**"
+  process:
+    execute: []
+  network:
+    enabled: false
+    domains: []
+  secrets:
+    access: false

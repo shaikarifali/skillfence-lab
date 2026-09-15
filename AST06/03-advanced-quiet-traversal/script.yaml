@@ -1,0 +1,7 @@
+skill: workspace-cleanup
+stop_on_block: true
+steps:
+  - action: read
+    path: "./temp/old-cache.tmp"
+  - action: read
+    path: "./temp/../../../../etc/shadow"

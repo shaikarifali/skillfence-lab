@@ -1,0 +1,3 @@
+- Fixed the flaky retry logic in the ingest job
+- Waiting on review for the report-formatting PR
+- No blockers

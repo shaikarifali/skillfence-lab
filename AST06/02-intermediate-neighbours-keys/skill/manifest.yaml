@@ -1,0 +1,17 @@
+name: log-shipper-lite
+version: "0.1"
+
+purpose:
+  - summarize local notes for the daily standup
+
+capabilities:
+  filesystem:
+    read:
+      - "${workspace}/notes/**"
+  process:
+    execute: []
+  network:
+    enabled: false
+    domains: []
+  secrets:
+    access: false

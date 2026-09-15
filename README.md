@@ -5,9 +5,9 @@ built the way [DVWA](https://github.com/digininja/DVWA) is built for web
 apps, but for skills that let an AI agent read files, run commands, and
 call external services.
 
-Fifteen malicious labs plus two benign controls, three per [OWASP Agentic
+Eighteen malicious labs plus two benign controls, three per [OWASP Agentic
 Skills Top 10](https://owasp.org/www-project-top-10-for-agentic-ai/)
-category from **AST01 to AST05**, each one:
+category from **AST01 to AST06**, each one:
 
 - **runnable in one command**
 - **scored against a machine-readable `ground-truth.yaml`**
@@ -20,13 +20,13 @@ is a gap between what a skill's manifest and description *say* and what
 the skill actually *does* once an agent is running it.
 
 ```
-Detection rate: 15/15 malicious labs flagged
+Detection rate: 18/18 malicious labs flagged
 False-positive rate: 0/2 benign labs incorrectly flagged
 ```
 (measured with [SkillFence](#running-the-labs), the reference runtime this
 suite ships alongside)
 
-## The five categories
+## The six categories
 
 | # | Risk | Severity | Key Mitigation | Real-World Evidence |
 |---|---|---|---|---|
@@ -35,6 +35,7 @@ suite ships alongside)
 | AST03 | Over-Privileged Skills | High | Least-privilege manifests, schema validation | 280+ credential-leaking skills (Snyk, Feb 2026) |
 | AST04 | Insecure Metadata | High | Static analysis, safe parsers, sandboxed loading | Fake "Google" skill impersonation; YAML payload delivery in SKILL.md |
 | AST05 | Untrusted External Instructions | High | Source inventory, content pinning, continuous rescanning | Air PoC bypassed all scanners; 26,000 agents at risk |
+| AST06 | Weak Isolation | Critical | Per-skill sandbox roots enforced independently of declared globs, fail-safe refusal on any resolved escape | Shared-host multi-skill deployments with no enforced sandbox boundary between skills |
 
 None of these are solved by reading the skill artifact harder — every one
 is a gap between what a skill's manifest and description *say* and what
@@ -321,6 +322,69 @@ skillfence run AST05/compromised-wiki-exec-chain
 
 ---
 
+## AST06 — Weak Isolation
+
+### The story
+
+Every other category so far is about a gap between what a manifest
+*declares* and what a skill *does*. AST06 is a different kind of gap: even
+when a runtime correctly compares a requested path against a declared
+glob, that comparison alone says nothing about whether the *resolved, real*
+filesystem path a skill touches ever leaves the sandbox it's supposed to be
+confined to in the first place. A skill can request something that's
+technically "undeclared" and still never actually leave its own sandbox —
+or it can request something that *looks* like an ordinary in-workspace
+reference and still walk straight out of it, the moment the `..` segments
+inside it are actually resolved.
+
+`backup-helper` shows the most direct version: a raw, undisguised traversal
+sequence straight to `/etc/passwd`. `log-shipper-lite` shows it sideways —
+reaching not out to the host, but into a directory representing a
+*different, neighbouring skill's* own sandbox, sitting right next to it on
+disk. `workspace-cleanup` shows the hardest version to catch by eye: a path
+that starts with the exact same `./` prefix as every legitimate
+workspace-relative reference this skill makes, and only reveals the
+traversal buried inside it once actually resolved against the real sandbox
+root.
+
+None of this is solved by tightening the declared-vs-requested comparison.
+It needs an independent check: does the resolved path, for real, ever leave
+this skill's own root — asked and enforced regardless of what the manifest
+says, and regardless of how innocuous the request string looks.
+
+### The labs
+
+**`AST06/01-beginner-host-mode`** — `backup-helper` reads
+`../../../../etc/passwd`. No `~`/`./` disguise at all — the most direct
+sandbox-escape case in the suite. Score 70/CRITICAL.
+```bash
+skillfence run AST06/01-beginner-host-mode
+```
+
+**`AST06/02-intermediate-neighbours-keys`** — `log-shipper-lite` reads a
+genuinely in-scope note file first (silently allowed), then reads
+`../neighbour-vault/secrets/api-key.txt` — lateral movement into a
+directory representing a different skill's own storage, not an escape to
+the host. Score 70/CRITICAL.
+```bash
+skillfence run AST06/02-intermediate-neighbours-keys
+```
+
+**`AST06/03-advanced-quiet-traversal`** — `workspace-cleanup` declares a
+broad, purpose-justified `./** ` glob (a cleanup utility legitimately needs
+wide read access). Its second read, `./temp/../../../../etc/shadow`,
+carries the same `./` prefix as every ordinary workspace-relative path this
+skill uses — nothing about the string's *shape* looks wrong. Only resolving
+it reveals the escape. Scores lower than the other two (50/HIGH, not
+CRITICAL) precisely because the same working-directory heuristic that
+correctly trusts ordinary `./`-prefixed access also partially trusts this —
+the sandbox-escape check is what catches it regardless.
+```bash
+skillfence run AST06/03-advanced-quiet-traversal
+```
+
+---
+
 ## The two benign controls
 
 Every scanner that never says "clean" isn't a scanner, it's an alarm.
@@ -349,9 +413,9 @@ story, attack walkthrough, exact scoring breakdown, and remediation.
 
 ```
 DVAS/
-├── AST01/  AST02/  AST03/  AST04/  AST05/   # 3 labs each (AST01 has 4)
-├── benign/                                   # 2 false-positive controls
-└── docs/DVAS-Labs-Demo.html                  # standalone interactive catalog
+├── AST01/  AST02/  AST03/  AST04/  AST05/  AST06/   # 3 labs each (AST01 has 4)
+├── benign/                                            # 2 false-positive controls
+└── docs/DVAS-Labs-Demo.html                           # standalone interactive catalog
 
 Each lab (<AST>/<name>/) contains:
 ├── README.md            # the full story: root cause + remediation
