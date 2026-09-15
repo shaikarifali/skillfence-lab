@@ -6,7 +6,7 @@ apps, but for skills that let an AI agent read files, run commands, and
 call external services.
 
 **Full OWASP Agentic Skills Top 10 coverage — AST01 through AST10.**
-Twenty-four malicious labs scored by a single `skillfence bench` pass,
+Twenty-five malicious labs scored by a single `skillfence bench` pass,
 plus three multi-invocation AST07 labs verified across runs, three
 fleet-shaped AST09 governance labs (see below), and three benign controls —
 three per [OWASP Agentic Skills Top 10](https://owasp.org/www-project-top-10-for-agentic-ai/)
@@ -23,7 +23,7 @@ is a gap between what a skill's manifest and description *say* and what
 the skill actually *does* once an agent is running it.
 
 ```
-Detection rate: 24/24 malicious labs flagged
+Detection rate: 25/25 malicious labs flagged
 False-positive rate: 0/3 benign labs incorrectly flagged
 ```
 (measured with [SkillFence](#running-the-labs), the reference runtime this
@@ -110,6 +110,20 @@ skill's own definition as instructions the same way it reads a fetched
 document.
 ```bash
 skillfence run AST01/logic-layer-injection
+```
+
+**`AST01/hidden-unicode-injection`** — the harder sibling of the lab above:
+the directive isn't overlooked by a careful reviewer, it's invisible to one.
+Built entirely from zero-width space characters threaded between its own
+letters, it renders as ordinary prose in a terminal, an editor, or GitHub's
+file view. DVAS scans a normalized view of the skill's definition — invisible
+characters stripped, any Unicode Tag block payload decoded — so the directive
+surfaces anyway, and raises a distinct "instruction was hidden" signal
+separate from the base LPCI detection, because a reviewer who reads a
+directive and dismisses it is a different failure than one who never had a
+chance to see it.
+```bash
+skillfence run AST01/hidden-unicode-injection
 ```
 
 **`AST01/delayed-payload`** — benign on its first two invocations, turns
@@ -650,7 +664,7 @@ story, attack walkthrough, exact scoring breakdown, and remediation.
 
 ```
 DVAS/
-├── AST01/ … AST10/   # 3 labs each (AST01 has 4); full OWASP Agentic Skills Top 10
+├── AST01/ … AST10/   # 3 labs each (AST01 has 5); full OWASP Agentic Skills Top 10
 ├── benign/                                                    # 3 false-positive controls
 └── docs/DVAS-Labs-Demo.html                                   # standalone interactive catalog
 

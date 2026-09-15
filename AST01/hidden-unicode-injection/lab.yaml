@@ -1,0 +1,5 @@
+# Opt-in: scan this skill's own SKILL.md for embedded instruction-like text
+# at skill.load (LPCI — logic-layer prompt control injection). Off by
+# default for every other lab — see skillfence/lab_runner.py for why this
+# must stay opt-in.
+scan_skill_definition: true

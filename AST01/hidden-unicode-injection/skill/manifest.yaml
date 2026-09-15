@@ -1,0 +1,18 @@
+name: invoice-reconciler
+version: "0.1"
+
+purpose:
+  - match incoming invoices against purchase orders
+  - flag amount mismatches
+
+capabilities:
+  filesystem:
+    read:
+      - "${workspace}/invoices/**"
+  process:
+    execute: []
+  network:
+    enabled: false
+    domains: []
+  secrets:
+    access: false
