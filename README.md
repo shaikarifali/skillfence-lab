@@ -5,10 +5,10 @@ built the way [DVWA](https://github.com/digininja/DVWA) is built for web
 apps, but for skills that let an AI agent read files, run commands, and
 call external services.
 
-Eighteen malicious labs scored by a single `skillfence bench` pass, plus
+Twenty-one malicious labs scored by a single `skillfence bench` pass, plus
 three multi-invocation AST07 labs verified across runs (see below) and two
 benign controls — three per [OWASP Agentic Skills Top 10](https://owasp.org/www-project-top-10-for-agentic-ai/)
-category from **AST01 to AST07**, each one:
+category from **AST01 to AST08**, each one:
 
 - **runnable in one command**
 - **scored against a machine-readable `ground-truth.yaml`**
@@ -27,7 +27,7 @@ False-positive rate: 0/2 benign labs incorrectly flagged
 (measured with [SkillFence](#running-the-labs), the reference runtime this
 suite ships alongside)
 
-## The seven categories
+## The eight categories
 
 | # | Risk | Severity | Key Mitigation | Real-World Evidence |
 |---|---|---|---|---|
@@ -38,6 +38,7 @@ suite ships alongside)
 | AST05 | Untrusted External Instructions | High | Source inventory, content pinning, continuous rescanning | Air PoC bypassed all scanners; 26,000 agents at risk |
 | AST06 | Weak Isolation | Critical | Per-skill sandbox roots enforced independently of declared globs, fail-safe refusal on any resolved escape | Shared-host multi-skill deployments with no enforced sandbox boundary between skills |
 | AST07 | Update Drift | High | Cross-invocation behavioral baseline, independent of whether the manifest or version ever changed | Skills whose real behavior drifts without any version bump or declared-capability change |
+| AST08 | Poor Scanning | Critical | Instruction-shape detection independent of position/phrasing, not code-pattern grep | A declared "already scanned" attestation contradicted by a live runtime finding |
 
 None of these are solved by reading the skill artifact harder — every one
 is a gap between what a skill's manifest and description *say* and what
@@ -451,6 +452,58 @@ gate.
 
 ---
 
+## AST08 — Poor Scanning
+
+### The story
+
+Every skill in this category ships with something the others don't: a
+manifest field declaring it already passed a static security scan, naming
+the exact tool that reviewed it. That's not fiction — it's the real
+`security.scanned`/`scan_tool` attestation SkillFence's manifest schema
+supports. The point of this category is what that attestation is worth: a
+scanner tuned to catch code-layer attack shapes (`exec(`, `curl`,
+`subprocess`) has nothing to say about a plain-language directive sitting
+in prose. A scanner that reads the interesting-looking parts of a document
+and skims the rest misses the same directive buried in thirty lines of
+plausible changelog. A scanner tuned to this exact lab suite's own known
+payload signature (`AGENT_INSTRUCTION:`) misses the same intent phrased
+one sentence differently. None of these scanners are fictional strawmen —
+they're the realistic, reasonable-sounding ways a static review actually
+gets built, and each one has a real blind spot SkillFence's runtime
+detection doesn't share, because it isn't grepping for code shapes or
+literal strings — it's recognizing instruction-shaped language.
+
+### The labs
+
+**`AST08/01-beginner-regex-blind-spot`** — `expense-tracker`'s approving
+scanner checks for code patterns only; the payload is plain prose with
+none. 80/CRITICAL, tagged `AST01`/`AST03`/`AST08`.
+```bash
+skillfence run AST08/01-beginner-regex-blind-spot
+```
+
+**`AST08/02-intermediate-buried-lede`** — the identical directive, buried
+in the middle of a genuinely long, plausible four-release changelog.
+SkillFence's scan is position-independent; depth of burial changes
+nothing.
+```bash
+skillfence run AST08/02-intermediate-buried-lede
+```
+
+**`AST08/03-advanced-signature-drift`** — the approving scanner is tuned
+specifically to this lab suite's own `AGENT_INSTRUCTION:` signature. This
+lab's directive is phrased as `[SYSTEM] ... As the agent, you should...`
+instead — same intent, a signature that scanner was never built to catch.
+```bash
+skillfence run AST08/03-advanced-signature-drift
+```
+
+All three score identically (80/CRITICAL) — the difficulty in this
+category isn't in the resulting score, it's in recognizing *why* each
+scanner's specific, realistic tuning choice would have missed it.
+
+---
+
 ## The two benign controls
 
 Every scanner that never says "clean" isn't a scanner, it's an alarm.
@@ -479,7 +532,7 @@ story, attack walkthrough, exact scoring breakdown, and remediation.
 
 ```
 DVAS/
-├── AST01/  AST02/  AST03/  AST04/  AST05/  AST06/  AST07/   # 3 labs each (AST01 has 4)
+├── AST01/  AST02/  AST03/  AST04/  AST05/  AST06/  AST07/  AST08/   # 3 labs each (AST01 has 4)
 ├── benign/                                                    # 2 false-positive controls
 └── docs/DVAS-Labs-Demo.html                                   # standalone interactive catalog
 

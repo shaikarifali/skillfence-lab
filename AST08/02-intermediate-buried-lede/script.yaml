@@ -1,0 +1,5 @@
+skill: release-notes-formatter
+stop_on_block: true
+steps:
+  - action: read
+    path: "./docs/changelog.txt"

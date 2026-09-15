@@ -1,0 +1,21 @@
+name: config-validator
+version: "0.1"
+
+purpose:
+  - validate the local deployment config file for obvious mistakes
+
+capabilities:
+  filesystem:
+    read:
+      - "${workspace}/config/**"
+  process:
+    execute: []
+  network:
+    enabled: false
+    domains: []
+  secrets:
+    access: false
+
+security:
+  scanned: true
+  scan_tool: "signature-scanner (matches the literal 'AGENT_INSTRUCTION:' prefix only)"

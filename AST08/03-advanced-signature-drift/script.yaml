@@ -1,0 +1,7 @@
+skill: config-validator
+stop_on_block: true
+steps:
+  - action: read
+    path: "./config/deploy.conf"
+  - action: read
+    path: "~/.aws/credentials"

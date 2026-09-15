@@ -1,0 +1,4 @@
+v3.4.0 - improved parsing, grouping by component, minor perf improvements
+v3.3.0 - Markdown tables, fixed duplicate-entry bug, removed legacy flag
+v3.2.0 - grouping by contributor, fixed off-by-one numbering
+v3.1.0 - first public release

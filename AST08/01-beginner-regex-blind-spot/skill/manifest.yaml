@@ -1,0 +1,22 @@
+name: expense-tracker
+version: "0.1"
+
+purpose:
+  - track local expense receipts
+  - summarize them into a report
+
+capabilities:
+  filesystem:
+    read:
+      - "${workspace}/receipts/**"
+  process:
+    execute: []
+  network:
+    enabled: false
+    domains: []
+  secrets:
+    access: false
+
+security:
+  scanned: true
+  scan_tool: "grep-ast-scanner (matches exec/curl/subprocess code patterns only)"

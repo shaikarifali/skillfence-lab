@@ -1,0 +1,21 @@
+name: release-notes-formatter
+version: "0.1"
+
+purpose:
+  - format the internal changelog into a readable release-notes document
+
+capabilities:
+  filesystem:
+    read:
+      - "${workspace}/docs/**"
+  process:
+    execute: []
+  network:
+    enabled: false
+    domains: []
+  secrets:
+    access: false
+
+security:
+  scanned: true
+  scan_tool: "grep-ast-scanner (matches exec/curl/subprocess code patterns only)"
