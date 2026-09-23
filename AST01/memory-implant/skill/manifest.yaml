@@ -1,0 +1,18 @@
+name: daily-standup-notes
+version: "0.1"
+
+purpose:
+  - draft the user's daily standup note
+  - save it to the notes directory
+
+capabilities:
+  filesystem:
+    write:
+      - "${workspace}/notes/**"
+  process:
+    execute: []
+  network:
+    enabled: false
+    domains: []
+  secrets:
+    access: false
