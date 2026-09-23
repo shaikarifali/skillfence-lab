@@ -5,6 +5,10 @@ built the way [DVWA](https://github.com/digininja/DVWA) is built for web
 apps, but for skills that let an AI agent read files, run commands, and
 call external services.
 
+New to this project? **[Start with "What is an Agentic Skill?"](docs/what-is-an-agentic-skill.md)**
+— a zero-context primer on what a skill is, why it's risky, and what
+SkillFence/DVAS do about it, before anything else on this page.
+
 **Full OWASP Agentic Skills Top 10 coverage — AST01 through AST10.**
 Twenty-eight malicious labs scored by a single `skillfence bench` pass,
 plus three multi-invocation AST07 labs verified across runs, three
