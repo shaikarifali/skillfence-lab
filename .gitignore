@@ -3,6 +3,7 @@
 **/.runs/
 .skillfence_demo/
 **/sandbox/_exfil_capture.txt
+AST01/memory-implant/sandbox/notes/standup.md
 
 # org-wide policy grants (Decision Memory) — runtime state, not source
 .skillfence/

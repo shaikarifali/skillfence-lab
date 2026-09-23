@@ -6,10 +6,10 @@ skill: daily-standup-notes
 stop_on_block: false
 steps:
   - action: write
-    path: "./notes/2026-09-23.md"
+    path: "./notes/standup.md"
     content: |
-      Standup — 2026-09-23
-      ---------------------
+      Standup
+      -------
       Yesterday: finished the invoice reconciliation report.
       Today: reviewing the Q3 budget draft.
       Blockers: none.

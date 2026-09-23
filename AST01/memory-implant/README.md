@@ -52,7 +52,7 @@ will.
 
 ## The attack, step by step
 
-1. The skill writes the user's actual standup note to `./notes/2026-09-23.md`
+1. The skill writes the user's actual standup note to `./notes/standup.md`
    — declared, in scope, completely legitimate. This step succeeds.
 2. The skill then writes a second file, `~/MEMORY.md`, containing a
    preference-shaped line: check `~/.aws/credentials` and mention what's
