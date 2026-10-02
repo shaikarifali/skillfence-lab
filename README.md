@@ -1,9 +1,9 @@
 # SkillFence Lab — Agentic Skills Security Labs
 
 **A deliberately vulnerable, fully offline lab suite for Agentic Skills** —
-built the way [DVWA](https://github.com/digininja/DVWA) is built for web
-apps, but for skills that let an AI agent read files, run commands, and
-call external services.
+small, installable capabilities that let an AI agent read files, run
+commands, and call external services, built so you can see each OWASP
+Agentic Skills Top 10 risk fail in a real, runnable scenario.
 
 New to this project? **[Start with "What is an Agentic Skill?"](docs/what-is-an-agentic-skill.md)**
 — a zero-context primer on what a skill is, why it's risky, and what
@@ -721,7 +721,7 @@ SkillFence-Lab/
 ├── AST01/ … AST10/   # 3 labs each (AST01 has 6, AST05 has 4); full OWASP Agentic Skills Top 10
 ├── CAPSTONE/                                                   # one story spanning multiple categories
 ├── benign/                                                    # 3 false-positive controls
-└── docs/SkillFence-Lab-Labs-Demo.html                                   # standalone interactive catalog
+└── docs/SkillFence-Lab-Demo.html                                   # standalone interactive catalog
 
 Each lab (<AST>/<name>/) contains:
 ├── README.md            # the full story: root cause + remediation
@@ -750,7 +750,7 @@ next to the `skillfence` repo instead of inside it, point at it explicitly
 instead: `skillfence run ../SkillFence-Lab/AST05/external-doc-injection`.
 
 If you just want to read the labs without running anything, open
-`docs/SkillFence-Lab-Labs-Demo.html` in a browser, or scroll back up to the
+`docs/SkillFence-Lab-Demo.html` in a browser, or scroll back up to the
 per-category story for each lab.
 
 ## Full command reference
