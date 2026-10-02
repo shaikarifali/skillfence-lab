@@ -68,7 +68,7 @@ its update pipeline — a single support ticket is the entire attack surface.
    step: reading `./customers/acct-4471.json` to help answer the original
    billing question. This succeeds — it was never the problem.
 
-## What DVAS catches
+## What SkillFence-Lab catches
 
 Two findings, correlated into the same session:
 

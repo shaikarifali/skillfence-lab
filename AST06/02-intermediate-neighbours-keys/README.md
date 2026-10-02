@@ -42,7 +42,7 @@ this skill in isolation — which is how most manifest reviews work — has no
 way to know a neighbouring skill's storage even exists, let alone that this
 one can reach it.
 
-## What DVAS catches
+## What SkillFence-Lab catches
 
 | Signal | Value |
 |---|---|
@@ -61,9 +61,9 @@ carries the full weight on its own.
 ## Try it
 
 ```bash
-skillfence run DVAS/AST06/02-intermediate-neighbours-keys                    # live interactive gate
-skillfence run DVAS/AST06/02-intermediate-neighbours-keys --decision reject  # non-interactive
-skillfence findings DVAS/AST06/02-intermediate-neighbours-keys
+skillfence run SkillFence-Lab/AST06/02-intermediate-neighbours-keys                    # live interactive gate
+skillfence run SkillFence-Lab/AST06/02-intermediate-neighbours-keys --decision reject  # non-interactive
+skillfence findings SkillFence-Lab/AST06/02-intermediate-neighbours-keys
 ```
 
 ## Remediation

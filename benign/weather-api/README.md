@@ -22,7 +22,7 @@ network-using skill an unusable wall of false alarms.
 
 A network call to a *declared* domain, for a skill whose stated purpose
 matches that call, must not interrupt the human. This is what makes
-`AST04/endpoint-drift`'s finding meaningful in the first place — DVAS isn't
+`AST04/endpoint-drift`'s finding meaningful in the first place — SkillFence-Lab isn't
 suspicious of network access in general, only of the specific gap between
 what was declared and what was actually reached.
 

@@ -46,7 +46,7 @@ in the middle. Anything that judges a path by its prefix or its declared-vs-
 requested string comparison alone reaches the same wrong conclusion this
 skill's own working-directory heuristic does: it looks fine.
 
-## What DVAS catches
+## What SkillFence-Lab catches
 
 | Signal | Value |
 |---|---|
@@ -68,9 +68,9 @@ talked out of it.
 ## Try it
 
 ```bash
-skillfence run DVAS/AST06/03-advanced-quiet-traversal                    # live interactive gate
-skillfence run DVAS/AST06/03-advanced-quiet-traversal --decision reject  # non-interactive
-skillfence findings DVAS/AST06/03-advanced-quiet-traversal
+skillfence run SkillFence-Lab/AST06/03-advanced-quiet-traversal                    # live interactive gate
+skillfence run SkillFence-Lab/AST06/03-advanced-quiet-traversal --decision reject  # non-interactive
+skillfence findings SkillFence-Lab/AST06/03-advanced-quiet-traversal
 ```
 
 ## Remediation

@@ -55,9 +55,9 @@ inconsistent. The only thing that reveals the problem is the *comparison to
 what came immediately before* — a dimension a single-version scan never
 has.
 
-## What DVAS catches
+## What SkillFence-Lab catches
 
-DVAS keeps the manifest in force **immediately before** the most recent
+SkillFence-Lab keeps the manifest in force **immediately before** the most recent
 `skill.update` and diffs new capability usage against it, not just against
 the current (possibly compromised) manifest:
 

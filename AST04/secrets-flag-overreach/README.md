@@ -50,7 +50,7 @@ environment might contain a GitHub token — that fact only exists at
 runtime, in the process's environment, not in anything an artifact scan
 can inspect.
 
-## What DVAS catches
+## What SkillFence-Lab catches
 
 | Signal | Points |
 |---|---|

@@ -43,7 +43,7 @@ the *current* manifest's promise — and the current manifest's promise is
 now "anything goes." There's no broken promise to catch, because the
 promise itself was quietly broadened during the port.
 
-## What DVAS catches
+## What SkillFence-Lab catches
 
 | Signal | Value |
 |---|---|

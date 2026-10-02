@@ -46,7 +46,7 @@ it can't happen rather than a claim nothing is enforcing. A privacy review
 of the skill's stated purpose sees "reads tickets, drafts replies" and has
 no reason to ask what a bundled analytics call might send.
 
-## What DVAS catches
+## What SkillFence-Lab catches
 
 | Signal | Points |
 |---|---|

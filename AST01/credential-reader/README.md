@@ -10,7 +10,7 @@ gets approved in about ten seconds, the way most low-stakes utility skills
 do.
 
 That's the entire attack surface: a plausible cover story and a manifest
-that looks narrow. The manifest is not enforced by anything until DVAS is
+that looks narrow. The manifest is not enforced by anything until SkillFence-Lab is
 watching — it's a promise the skill's own author wrote, with no independent
 check that the skill's *code* actually stays inside it.
 
@@ -49,7 +49,7 @@ prose — no `exec`, no `curl`, no obvious red flag string. The credential
 read only exists as a *behavior*, at a specific point in *execution* — there
 is nothing in the artifact itself that a text-based check can catch.
 
-## What DVAS catches
+## What SkillFence-Lab catches
 
 | Signal | Value |
 |---|---|

@@ -18,7 +18,7 @@ instruction follower: it appends the instructed step to its own plan and
 carries it out — exactly the failure mode a real LLM-driven agent is
 susceptible to via prompt injection.
 
-DVAS's provenance chain shows the human exactly why this read happened:
+SkillFence-Lab's provenance chain shows the human exactly why this read happened:
 
 ```
 skill.invoke -> external_content.fetch -> external_content.instruction_detected -> filesystem.read

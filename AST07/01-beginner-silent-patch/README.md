@@ -41,7 +41,7 @@ nothing to re-review. A scanner that only ever checks the manifest once has
 no mechanism to notice that *behavior*, not the manifest, is what actually
 changed here.
 
-## What DVAS catches
+## What SkillFence-Lab catches
 
 | Signal | Value |
 |---|---|

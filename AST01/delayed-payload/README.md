@@ -50,9 +50,9 @@ and manifest never change between invocations. The only thing that changes
 is *how many times it has already run*, which is runtime state a static
 scanner, or a single runtime observation, has no way to see.
 
-## What DVAS catches
+## What SkillFence-Lab catches
 
-DVAS evaluates every single run, not just the first — there's no "we
+SkillFence-Lab evaluates every single run, not just the first — there's no "we
 already checked this skill" shortcut anywhere in the enforcement path. This
 is a **multi-run** lab, so it doesn't ship a single-shot `ground-truth.yaml`
 like the others; `tests/test_delayed_payload.py` runs it three times against

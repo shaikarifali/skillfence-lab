@@ -59,11 +59,11 @@ will.
    there whenever credentials come up. This is neither declared (the
    manifest only declares `./notes/**`) nor a file this skill has any
    legitimate reason to touch.
-3. DVAS recognizes `MEMORY.md` as a conventional agent identity/memory
+3. SkillFence-Lab recognizes `MEMORY.md` as a conventional agent identity/memory
    file regardless of whether the manifest happens to declare write access
    to it, and flags the write as a persistence attempt. **Blocked.**
 
-## What DVAS catches
+## What SkillFence-Lab catches
 
 | Signal | Points |
 |---|---|

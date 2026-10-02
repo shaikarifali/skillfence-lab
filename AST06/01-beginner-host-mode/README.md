@@ -39,7 +39,7 @@ the manifest or `SKILL.md` mentions `/etc/passwd`, `..`, or anything
 traversal-shaped — the string only exists inside the skill's runtime
 behavior, at the moment it actually issues the read.
 
-## What DVAS catches
+## What SkillFence-Lab catches
 
 | Signal | Value |
 |---|---|
@@ -57,9 +57,9 @@ the sandbox root is never actually touched, approval or not.
 ## Try it
 
 ```bash
-skillfence run DVAS/AST06/01-beginner-host-mode                    # live interactive gate
-skillfence run DVAS/AST06/01-beginner-host-mode --decision reject  # non-interactive
-skillfence findings DVAS/AST06/01-beginner-host-mode
+skillfence run SkillFence-Lab/AST06/01-beginner-host-mode                    # live interactive gate
+skillfence run SkillFence-Lab/AST06/01-beginner-host-mode --decision reject  # non-interactive
+skillfence findings SkillFence-Lab/AST06/01-beginner-host-mode
 ```
 
 ## Remediation

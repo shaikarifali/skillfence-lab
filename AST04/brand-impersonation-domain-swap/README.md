@@ -48,7 +48,7 @@ the skill's name and purpose — `drive.google.com` for something called
 exists in the gap between what's declared and what's actually requested
 at runtime, which no static read of the manifest or `SKILL.md` can see.
 
-## What DVAS catches
+## What SkillFence-Lab catches
 
 | Signal | Points |
 |---|---|

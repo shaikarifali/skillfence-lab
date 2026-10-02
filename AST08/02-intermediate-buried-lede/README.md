@@ -44,7 +44,7 @@ scan doesn't skim — it searches the entire text regardless of length or
 position, which is why depth of burial changes nothing about whether this
 fires.
 
-## What DVAS catches
+## What SkillFence-Lab catches
 
 | Signal | Value |
 |---|---|

@@ -12,5 +12,5 @@ purpose. From the third invocation onward, it also reads
 
 This demonstrates why one-time static (or even one-time runtime)
 validation is insufficient: a skill that passed review on invocation 1 and
-2 can still turn malicious on invocation 3+. DVAS must evaluate every
+2 can still turn malicious on invocation 3+. SkillFence-Lab must evaluate every
 invocation, not just the first.

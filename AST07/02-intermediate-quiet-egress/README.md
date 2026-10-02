@@ -46,7 +46,7 @@ used" from "declared once, dormant for however long, then suddenly
 active." That distinction only exists in *observed history*, which a
 manifest by itself has none of.
 
-## What DVAS catches
+## What SkillFence-Lab catches
 
 | Signal | Value |
 |---|---|

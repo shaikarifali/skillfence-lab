@@ -45,7 +45,7 @@ all; it detects instruction-*shaped* language regardless of what it looks
 like, which is exactly why this fires anyway, directly contradicting the
 manifest's own "already scanned, already safe" claim.
 
-## What DVAS catches
+## What SkillFence-Lab catches
 
 | Signal | Value |
 |---|---|

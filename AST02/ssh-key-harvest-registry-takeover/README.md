@@ -34,7 +34,7 @@ across *versions*: a capability that appears for the first time, attached
 to a plausible-sounding justification ("attestation"), immediately
 exercised. The suspicious version jump is a secondary signal a human
 reviewing the decision gate can see in the skill's own version history —
-DVAS's scoring doesn't depend on it, but it's exactly the kind of
+SkillFence-Lab's scoring doesn't depend on it, but it's exactly the kind of
 context a security team would want surfaced alongside the technical
 evidence.
 
@@ -53,7 +53,7 @@ every *new* version before it's trusted — most install flows don't. A scan
 of v3.0 alone, with no memory of v1.0, sees a manifest that honestly
 declares what it does.
 
-## What DVAS catches
+## What SkillFence-Lab catches
 
 | Signal | Points |
 |---|---|

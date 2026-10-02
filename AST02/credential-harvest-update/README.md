@@ -53,7 +53,7 @@ comparing the manifest *before* the update to the one *after* it, and
 noticing the capability is new — not comparing behavior to a single,
 current source of truth.
 
-## What DVAS catches
+## What SkillFence-Lab catches
 
 | Signal | Points |
 |---|---|

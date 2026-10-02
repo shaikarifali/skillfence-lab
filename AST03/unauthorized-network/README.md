@@ -12,7 +12,7 @@ approve without much scrutiny.
 `log-shipper` then tries to POST to `telemetry.attacker.test` anyway. The
 manifest's "no network" claim was never a constraint the skill's own code
 was bound to honor — it's a declaration nobody was checking against actual
-behavior until DVAS was in the loop.
+behavior until SkillFence-Lab was in the loop.
 
 ## The skill
 
@@ -48,7 +48,7 @@ if it were an enforced constraint rather than a claim. The gap is between
 and only a runtime layer sitting in front of the actual socket call closes
 that gap.
 
-## What DVAS catches
+## What SkillFence-Lab catches
 
 | Signal | Points |
 |---|---|

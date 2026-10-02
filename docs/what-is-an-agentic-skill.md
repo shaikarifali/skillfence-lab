@@ -60,13 +60,13 @@ regardless of what's declared, SkillFence stops and hands the decision to
 a human, with the full evidence trail attached. Nothing autonomous ever
 approves or rejects an action on its own.
 
-## What DVAS is
+## What SkillFence-Lab is
 
-**DVAS (Damn Vulnerable Agentic Skills)** — the project this document
+**SkillFence Lab (Agentic Skills Security Labs)** — the project this document
 lives in — is a lab suite built to demonstrate exactly the failure modes
 above, one at a time, safely. Every lab is a small, offline, deliberately
 vulnerable skill mapped to one of the ten OWASP categories. Nothing in
-DVAS ever opens a real network socket, touches a real credential, or
+SkillFence-Lab ever opens a real network socket, touches a real credential, or
 leaves your machine — every "leaked secret" and every "attacker server"
 is a local fixture file standing in for the real thing.
 
@@ -85,9 +85,9 @@ Each lab follows the same shape:
 
 ```bash
 pip install skillfence
-skillfence lab ui DVAS      # browse every lab in a live web UI
-skillfence run DVAS/AST05/external-doc-injection --decision reject
-skillfence lab hint DVAS/AST05/external-doc-injection   # stuck? one hint at a time
+skillfence lab ui SkillFence-Lab      # browse every lab in a live web UI
+skillfence run SkillFence-Lab/AST05/external-doc-injection --decision reject
+skillfence lab hint SkillFence-Lab/AST05/external-doc-injection   # stuck? one hint at a time
 ```
 
 The [top-level README](../README.md) has the full lab catalog, the ten

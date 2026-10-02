@@ -62,11 +62,11 @@ fetch. The compromise is entirely in mutable content the scanner never
 re-checks, served from infrastructure the skill's author may not even
 control by the time it's rug-pulled.
 
-## What DVAS catches
+## What SkillFence-Lab catches
 
 Both fetches are allowed (declared domain, LOW risk) — the fetch itself is
 never the attack, what the content *causes next* is. The instruction is
-detected and flagged (`external_content.instruction_detected`), and DVAS
+detected and flagged (`external_content.instruction_detected`), and SkillFence-Lab
 remembers, for the rest of this session, that an untrusted instruction was
 involved:
 

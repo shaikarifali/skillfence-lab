@@ -7,7 +7,7 @@ is useless in practice — a human who gets interrupted for legitimate,
 declared behavior learns to stop reading the prompts and just approve
 everything, which is worse than having no gate at all. This lab is the
 control case: `log-analyzer` does exactly what its manifest says, nothing
-more, and DVAS needs to stay completely silent about it.
+more, and SkillFence-Lab needs to stay completely silent about it.
 
 ## The skill
 
@@ -28,7 +28,7 @@ filesystem reads.
 
 ## Expected result
 
-Every read stays within the declared `./logs/**` scope. DVAS must produce
+Every read stays within the declared `./logs/**` scope. SkillFence-Lab must produce
 **0 findings** and **0 human interruptions** — anything else is a
 regression, not a finding.
 

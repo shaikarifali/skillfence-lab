@@ -22,6 +22,6 @@ A naive agent reads a skill's own definition as instructions the same way it
 reads a fetched document (AST05) — it just follows what's written. The
 difference from AST05 is provenance: this instruction was never fetched from
 anywhere external; it was present in the trusted skill artifact from the
-moment it loaded. DVAS tags this AST01 (malicious skill), not AST05
+moment it loaded. SkillFence-Lab tags this AST01 (malicious skill), not AST05
 (untrusted external instruction), and the finding's evidence explicitly says
 so.

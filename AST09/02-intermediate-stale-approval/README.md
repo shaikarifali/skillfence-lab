@@ -43,7 +43,7 @@ Expected output: four skills `clean`, `legacy-exporter` flagged `1
 ungoverned grant(s)` — an active grant with no review at or after it was
 issued to back it up.
 
-## What DVAS catches
+## What SkillFence-Lab catches
 
 `skillfence inventory` flags a grant as ungoverned when its `granted_at`
 timestamp isn't backed by any session review at or after it — including

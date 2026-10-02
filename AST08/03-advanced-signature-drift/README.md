@@ -50,7 +50,7 @@ while a human reading the approval would reasonably assume "scanned" means
 the skill was checked against instruction injection *in general*, not
 against one specific spelling of it.
 
-## What DVAS catches
+## What SkillFence-Lab catches
 
 | Signal | Value |
 |---|---|

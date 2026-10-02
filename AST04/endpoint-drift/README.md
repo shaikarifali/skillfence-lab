@@ -54,7 +54,7 @@ compare the *specific* destination against the *specific* allowlist entry
 to see the problem, and that comparison only has meaning against the actual
 runtime destination, not the manifest alone.
 
-## What DVAS catches
+## What SkillFence-Lab catches
 
 | Signal | Points |
 |---|---|
@@ -63,7 +63,7 @@ runtime destination, not the manifest alone.
 | Unknown destination | +10 |
 | **Total / severity** | **50 / HIGH** (CDS 0.50, band WARN) |
 
-Tagged `AST04` in addition to `AST03` — DVAS distinguishes "network wasn't
+Tagged `AST04` in addition to `AST03` — SkillFence-Lab distinguishes "network wasn't
 declared at all" (AST03) from "network was declared, with a specific
 promise the runtime broke" (AST04), because they call for different
 remediation: the first needs a broader manifest or a rejected install, the

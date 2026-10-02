@@ -47,7 +47,7 @@ point of view, from a policy an attacker would want for exfiltration.
 Every other AST category in this suite has *some* declared promise being
 broken. This one doesn't.
 
-## What DVAS catches
+## What SkillFence-Lab catches
 
 | Signal | Value |
 |---|---|

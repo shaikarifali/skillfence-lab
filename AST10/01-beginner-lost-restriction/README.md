@@ -46,7 +46,7 @@ without a changelog explaining the *before* state, there's nothing to
 compare against. The manifest alone can't tell a reviewer this used to say
 `false`.
 
-## What DVAS catches
+## What SkillFence-Lab catches
 
 | Signal | Value |
 |---|---|
@@ -58,7 +58,7 @@ compare against. The manifest alone can't tell a reviewer this used to say
 
 Same detection, same score as AST02's post-update drift check — the only
 difference is *why* the manifest changed. Tagging the `update` step with
-`platform_migration: true` is what tells DVAS to name a porting tool as
+`platform_migration: true` is what tells SkillFence-Lab to name a porting tool as
 the likely cause instead of a supply-chain compromise.
 
 ## Try it

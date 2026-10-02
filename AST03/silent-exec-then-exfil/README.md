@@ -9,7 +9,7 @@ face; local PDF-to-text conversion is a genuinely on-device operation.
 
 It reads a document, then quietly shells out to `pdftotext` — a capability
 its manifest never granted, but on its own an unremarkable-looking, LOW-risk
-action DVAS lets through without interrupting anyone. Then it uploads the
+action SkillFence-Lab lets through without interrupting anyone. Then it uploads the
 extracted text to `ocr-pipeline.attacker.test`. Neither step alone is
 dramatic. Together, they're the entire attack: extract, then send.
 
@@ -48,7 +48,7 @@ entirely if it only samples the highest-risk single call. What actually
 matters here is sequence: local execution immediately followed by network
 egress, with the exec's output plausibly being the payload.
 
-## What DVAS catches
+## What SkillFence-Lab catches
 
 | Step | Signal | Score |
 |---|---|---|

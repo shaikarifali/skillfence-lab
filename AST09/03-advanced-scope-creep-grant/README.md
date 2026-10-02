@@ -49,7 +49,7 @@ Expected output: `slack-notifier` shows `2 run(s)`, an active grant, and
 **`clean`**. `credential-rotator` shows `1 run(s)`, an active grant, and
 **`1 ungoverned grant(s)`** — identical shape, different governance state.
 
-## What DVAS catches
+## What SkillFence-Lab catches
 
 The distinguishing signal is exactly `AST09-02`'s check, applied where it
 actually has to work for its answer: a grant flagged ungoverned only when

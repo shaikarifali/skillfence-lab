@@ -44,7 +44,7 @@ report-bot    1 run(s)   none               0               clean
 shadow-sync   never      none               0               never reviewed
 ```
 
-## What DVAS catches
+## What SkillFence-Lab catches
 
 `skillfence inventory` walks every `skill/manifest.yaml` under the fleet
 root and cross-references it against every session ever recorded anywhere

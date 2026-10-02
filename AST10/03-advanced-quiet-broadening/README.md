@@ -46,7 +46,7 @@ domain list — sees nothing to object to. A narrow-looking list is not the
 same thing as an *unchanged* list, and nothing short of a direct
 before/after comparison against the true original can tell them apart.
 
-## What DVAS catches
+## What SkillFence-Lab catches
 
 | Signal | Value |
 |---|---|

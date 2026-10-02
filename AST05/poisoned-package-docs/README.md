@@ -56,7 +56,7 @@ the artifact. The instruction lives on a web page fetched at runtime,
 which changes independently of any version of the skill, on a schedule no
 package review process is watching.
 
-## What DVAS catches
+## What SkillFence-Lab catches
 
 | Signal | Points |
 |---|---|

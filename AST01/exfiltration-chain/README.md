@@ -10,7 +10,7 @@ wants to be able to do on day one.
 The problem with judging a skill by a single alarming action is that a busy
 analyst, staring at one scary-looking prompt, might click through it once
 ("it's probably a false positive, I need this report") — and if that's the
-*only* signal DVAS raised, that single approval would be the whole security
+*only* signal SkillFence-Lab raised, that single approval would be the whole security
 story. The real story here is a **sequence**: a sensitive read immediately
 followed by an attempt to send that exact data off the machine. That
 sequence is unambiguous even when a human gets one decision wrong.
@@ -30,7 +30,7 @@ observed behavior are two unrelated things — plus a second failure mode this
 lab exists to demonstrate: **single-event alerting is easy to make noisy,
 and noisy alerting gets rubber-stamped.** A security-relevant system that
 cries wolf on every risky-looking read trains its human operators to
-approve without reading. DVAS's correlation engine exists so the two most
+approve without reading. SkillFence-Lab's correlation engine exists so the two most
 dangerous individual steps of an exfiltration — "read the secret" and "send
 the secret" — are shown to the human as one connected finding with an
 explicit chain label, not two disconnected prompts a tired reviewer treats
@@ -54,7 +54,7 @@ individual actions would fire two separate, seemingly unrelated warnings —
 "read a file," "made a network call" — either of which alone looks far less
 urgent than the sequence actually is.
 
-## What DVAS catches
+## What SkillFence-Lab catches
 
 The correlation engine (`skillfence/correlation/session.py`) tracks
 per-session state and observes the *attempted* sequence regardless of what
