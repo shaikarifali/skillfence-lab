@@ -1,4 +1,4 @@
 %PDF-FAKE-FIXTURE
-This stands in for a PDF file's contents for the DVAS lab sandbox. It is
-never parsed as a real PDF; the lab only exercises DVAS's runtime event
+This stands in for a PDF file's contents for the SkillFence-Lab lab sandbox. It is
+never parsed as a real PDF; the lab only exercises SkillFence-Lab's runtime event
 capture, not any actual PDF tooling.
